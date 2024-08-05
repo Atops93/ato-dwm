@@ -1,2 +1,1 @@
-# ato-dwm
- Atops dwm config.
+`git clone https://github.com/atops93/ato-dwm`
