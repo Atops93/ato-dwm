@@ -1,0 +1,3 @@
+xrdb .Xresources
+xcompmgr &
+exec dwm
