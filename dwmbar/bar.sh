@@ -6,7 +6,7 @@
 interval=0
 
 # load colors
-. /home/atops/ato-dwm/bar_themes/onedark
+. /home/atops/ato-dwm/dwmbar/bar_themes/onedark
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
