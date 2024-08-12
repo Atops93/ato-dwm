@@ -75,11 +75,11 @@ static const char *flamecmd[] = { "flameshot", "gui", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ 0, XF86XK_MonBrightnessDown,				spawn,		{.v = dimmer } },
-	{ 0, XF86XK_MonBrightnessUp,				spawn,		{.v = brighter } },
-	{ 0, XF86XK_AudioMute,						spawn,		{.v = mute_vol } },
-    { 0, XF86XK_AudioLowerVolume,				spawn,		{.v = down_vol } },
-    { 0, XF86XK_AudioRaiseVolume,				spawn,		{.v = up_vol } },
+	{ 0, XF86XK_MonBrightnessDown,		   spawn,	   {.v = dimmer } },
+	{ 0, XF86XK_MonBrightnessUp,		   spawn,	   {.v = brighter } },
+	{ 0, XF86XK_AudioMute,			   spawn,	   {.v = mute_vol } },
+    	{ 0, XF86XK_AudioLowerVolume,		   spawn,	   {.v = down_vol } },
+	{ 0, XF86XK_AudioRaiseVolume,		   spawn,	   {.v = up_vol } },
 	{ MODKEY,                       XK_space,  spawn,          {.v = launchercmd} },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd} },
 	{ MODKEY,                       XK_Print,  spawn,          {.v = flamecmd } },
