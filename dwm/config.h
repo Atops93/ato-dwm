@@ -4,7 +4,7 @@
 #include <X11/XF86keysym.h>
 static const int status_mon = 0;   	            /* <=-1: follows focused monitor, >=0: static on given mon number */
 static const int fallback_status_mon = 1;       /* fallback monitor when a fullscreen window occupies the previous mon (only when static status is on) */
-static const unsigned int refresh_rate = 144;
+static const unsigned int refresh_rate = 60;
 static const unsigned int enable_noborder = 0;
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx     = 8;       	/* gaps between windows */
@@ -65,7 +65,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *launchercmd[] = { "rofi", "-show", "drun", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 static const char *up_vol[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%",   NULL };
 static const char *down_vol[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%",   NULL };
 static const char *mute_vol[] = { "pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle", NULL };
@@ -83,6 +83,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_space,  spawn,          {.v = launchercmd} },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd} },
 	{ MODKEY,                       XK_Print,  spawn,          {.v = flamecmd } },
+	{ MODKEY,                       XK_F8,     spawn,   	   {.v = flamecmd } },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("maim -s -u | xclip -selection clipboard -t image/png -i") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
