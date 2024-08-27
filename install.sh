@@ -9,5 +9,5 @@ continue
 
 echo "Moving my picom.conf file to /etc/xdg replacing a configured picom? (y/n)"
 if [[y]] ; then
-	sudo cp picom.conf /etc/xdg/
-echo "Your all good to go, run startx & it should run"
+	sudo pacman -S picom && sudo cp picom.conf /etc/xdg/
+echo "All good to go, run startx & it should run"
