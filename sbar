@@ -53,7 +53,7 @@ update_backlight
 
 display () { 
 	#printf "%s\n" " $event [$weather] [$memory $cpu] [$bat] [$backlight] [$vol] $time "
-	xsetroot -name " [$weather] [$memory $cpu] [$bat] [$backlight] [$vol] $time "
+	xsetroot -name " [$memory $cpu] [$bat] [$backlight] [$vol] $time "
 }
 
 # SIGNALLING
@@ -81,4 +81,4 @@ do
 		[ $((sec % 5 )) -eq 0 ] && display
 		sec=$((sec + 1))
 	}
-done 
+done
