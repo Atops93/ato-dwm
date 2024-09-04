@@ -1,2 +1,2 @@
 `git clone https://github.com/atops93/ato-dwm`
-![alt text]()
+![alt text](https://github.com/Atops93/ato-dwm/blob/main/my-sick-dwm-rice.png)
