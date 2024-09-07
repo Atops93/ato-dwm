@@ -29,7 +29,16 @@ update_bat () {
 }
 
 update_vol () { 
-	vol="$([ "$(pamixer --get-mute)" = "false" ] && printf '🔊' || printf '🔇')$(pamixer --get-volume)%"
+	# Check if PipeWire is being used
+	if command -v pactl >/dev/null 2>&1; then
+		# Get volume level and mute status
+		vol=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}')
+		mute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+		printf "%s" "$( [ "$mute" = "yes" ] && printf '🔇' || printf '🔊' )$vol%"
+	else
+		# Default fallback (e.g., for PulseAudio)
+		printf "%s" "$( [ "$(pamixer --get-mute)" = "false" ] && printf '🔊' || printf '🔇' )$(pamixer --get-volume)%"
+	fi
 }
 
 update_backlight () { 
@@ -45,7 +54,6 @@ update_backlight () {
 #		sed -E "s_^ *\[(.*):(.*)\] ([^\t]*)\t?.*_[\1h \2m->\3]_")" 
 #	[ "[]" = "$event" ] && event=""
 #}
-
 
 # modules that don't update on their own need to be run at the start for getting their initial value
 update_vol

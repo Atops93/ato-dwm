@@ -4,7 +4,7 @@ sudo make clean install
 cd ..
 echo "Do you want to replace the current .xinitrc if located with mine? (y/n)"
 if [[y]] ; then
-	sudo cp .xinitrc /home/$USER
+	cp .xinitrc /home/$USER
 continue
 
 echo "Moving my picom.conf file to /etc/xdg replacing a configured picom? (y/n)"
