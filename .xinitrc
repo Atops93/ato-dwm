@@ -12,5 +12,6 @@ xrandr --output eDP-1 --off --output HDMI-1 --primary --mode 1920x1080 &
 feh ~/ato-dwm/clean-mountain.png --bg-scale --no-fehbg &
 ~/ato-dwm/sbar &
 picom &
+xset r rate 200 30 &
 # exec icewm
 exec dwm

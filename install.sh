@@ -1,10 +1,10 @@
-sudo pacman -S libx11 libxft libxinerama
+sudo pacman -S xorg-server xorg-xinit libx11 libxft libxinerama xclip feh flameshot rofi brightnessctl picom
 cd dwm
 sudo make clean install
 cd ..
-echo "Do you want to replace the current .xinitrc if located with mine? (y/n)"
+echo "Do you want to replace your current .xinitrc if you created it, with mine? (y/n)"
 if [[y]] ; then
-	cp .xinitrc /home/$USER
+	sudo cp .xinitrc /home/$USER
 continue
 
 echo "Moving my picom.conf file to /etc/xdg replacing a configured picom? (y/n)"
