@@ -17,10 +17,6 @@ update_time () {
 	time="$(date "+[%a %d %b] [%I:%M %P]")" 
 }
 
-#update_weather () { 
-#	weather="$(curl -s "wttr.in?format=1"| sed -E "s/^(.).*\+/\1/")" 
-#}
-
 update_bat () { 
 	# you might need to change the path depending on your device
 	read -r bat_status </sys/class/power_supply/BAT0/status
@@ -28,18 +24,40 @@ update_bat () {
 	bat="$bat_status $bat_capacity%"
 }
 
-update_vol () { 
-	# Check if PipeWire is being used
-	if command -v pactl >/dev/null 2>&1; then
-		# Get volume level and mute status
-		vol=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}')
-		mute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
-		printf "%s" "$( [ "$mute" = "yes" ] && printf '🔇' || printf '🔊' )$vol%"
-	else
-		# Default fallback (e.g., for PulseAudio)
-		printf "%s" "$( [ "$(pamixer --get-mute)" = "false" ] && printf '🔊' || printf '🔇' )$(pamixer --get-volume)%"
-	fi
+update_vol () {
+    # Check if pactl (PipeWire/PulseAudio control) is available
+    if command -v pactl >/dev/null 2>&1; then
+        # Get volume level and mute status using PipeWire or PulseAudio
+        vol=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}')
+        mute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+        
+        # Display volume with mute/unmute icon
+        printf "%s" "$( [ "$mute" = "yes" ] && printf '🔇' || printf '🔊' )$vol"
+    elif command -v pamixer >/dev/null 2>&1; then
+        # Fallback for PulseAudio with pamixer
+        vol=$(pamixer --get-volume)
+        mute=$(pamixer --get-mute)
+        
+        # Display volume with mute/unmute icon
+        printf "%s" "$( [ "$mute" = "true" ] && printf '🔇' || printf '🔊' )$vol%"
+    else
+        # Handle case where neither PipeWire nor PulseAudio control tools are available
+        printf "Volume control unavailable"
+    fi
 }
+
+#update_vol () { 
+#	# Check if PipeWire is being used
+#	if command -v pactl >/dev/null 2>&1; then
+#		# Get volume level and mute status
+#		vol=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}')
+#		mute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+#		printf "%s" "$( [ "$mute" = "yes" ] && printf '🔇' || printf '🔊' )$vol%"
+#	else
+#		# Default fallback (e.g., for PulseAudio)
+#		printf "%s" "$( [ "$(pamixer --get-mute)" = "false" ] && printf '🔊' || printf '🔇' )$(pamixer --get-volume)%"
+#	fi
+#}
 
 update_backlight () { 
 	# you might need to change the path depending on your device
@@ -48,19 +66,12 @@ update_backlight () {
 	backlight="☀$((actual_brightness*100/max_brightness))%"
 }
 
-# For calcurse users, refer https://github.com/pystardust/automeet
-#update_event () { 
-#	event="$(calcurse -n | sed 1d | \
-#		sed -E "s_^ *\[(.*):(.*)\] ([^\t]*)\t?.*_[\1h \2m->\3]_")" 
-#	[ "[]" = "$event" ] && event=""
-#}
-
 # modules that don't update on their own need to be run at the start for getting their initial value
 update_vol
 update_backlight
 
 display () { 
-	#printf "%s\n" " $event [$weather] [$memory $cpu] [$bat] [$backlight] [$vol] $time "
+	#printf "%s\n" " $event [$memory $cpu] [$bat] [$backlight] [$vol] $time "
 	xsetroot -name " [$memory $cpu] [$bat] [$backlight] [$vol] $time "
 }
 
@@ -82,8 +93,6 @@ do
 		[ $((sec % 15)) -eq 0 ] && update_cpu 	# update cpu every 15 seconds
 		[ $((sec % 15)) -eq 0 ] && update_memory
 		[ $((sec % 60)) -eq 0 ] && update_bat
-		#[ $((sec % 3600)) -eq 2 ] && update_weather
-		#[ $((sec % 300)) -eq 1 ] && update_event
 
 		# how often the display updates ( 5 seconds )
 		[ $((sec % 5 )) -eq 0 ] && display
