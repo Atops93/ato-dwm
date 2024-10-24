@@ -35,7 +35,7 @@ installPackages() {
 }
 
 installDwm() {
-	cd dwm || { echo -e "${red}Failed to cd into the dwm directory.${reset}"; exit 1; }
+	cd ~/src/ato-dwm/dwm || { echo -e "${red}Failed to cd into the dwm directory.${reset}"; exit 1; }
 	sudo make clean install
 }
 
