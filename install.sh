@@ -29,9 +29,7 @@ installYay() {
 }
 
 installPackages() {
-	yay -S --noconfirm ttf-jetbrains-mono-nerd xorg-server xorg-xinit xorg-xsetroot \
-	libx11 libxft libxinerama xclip feh flameshot rofi brightnessctl picom alacritty xrandr \
-	make cmake
+	yay -S --noconfirm ttf-jetbrains-mono-nerd xorg-server xorg-xinit xorg-xsetroot libx11 libxft libxinerama xclip feh flameshot rofi brightnessctl picom alacritty xrandr make cmake
 }
 
 installDwm() {
@@ -41,7 +39,7 @@ installDwm() {
 
 moveConfigFiles() {
 	cd ~/src/ato-dwm/.config || { echo -e "${red}Failed to cd into the .config directory.${reset}"; exit 1; }
-	mv rofi ~/.config
+	sudo mv rofi ~/.config
 }
 
 replaceXinitrc() {
@@ -49,7 +47,7 @@ replaceXinitrc() {
 		read -rp "Do you want to replace your current .xinitrc with mine, unless this is a clean install? (y/n): " replace
 		case $replace in
 			y|Y) 
-				cp .xinitrc ~/
+				sudo cp .xinitrc ~/
 				echo "Done"
 				break
 				;;
@@ -58,7 +56,7 @@ replaceXinitrc() {
 				break
 				;;
 			*) 
-				echo "Invalid input, please enter 'y' or 'n'."
+				echo "Invalid input, enter 'y' or 'n'."
 				;;
 		esac
 	done
@@ -70,15 +68,15 @@ replacePicomConfig() {
 		case $picominstall in
 			y|Y)
 				sudo cp picom.conf /etc/xdg/
-				echo "picom.conf replaced or added."
+				echo "picom.conf was moved into /etc/xdg/"
 				break
 				;;
 			n|N)
-				echo "Skipping picom.conf change. (aka default)"
+				echo "Skipping picom.conf (aka default)"
 				break
 				;;
 			*)
-				echo "Invalid input, please enter 'y' or 'n'."
+				echo "Invalid input, enter 'y' or 'n'."
 				;;
 		esac
 	done
@@ -98,7 +96,7 @@ reduce-screen-tear-on-xorg-massivly() {
                                 break
                                 ;;
                         *)
-                                echo "Invalid input, please enter 'y' or 'n'."
+                                echo "Invalid input, enter 'y' or 'n'."
                                 ;;
                 esac
         done
@@ -118,7 +116,7 @@ touchpad-for-laptops() {
                                 break
                                 ;;
                         *)
-                                echo "Invalid input, please enter 'y' or 'n'."
+                                echo "Invalid input, enter 'y' or 'n'."
                                 ;;
                 esac
         done
@@ -134,7 +132,7 @@ main() {
 	reduce-screen-tear-on-xorg-massivly
 	touchpad-for-laptops
 	echo "All good! Run 'startx' and it should launch dwm depending on your startx config."
-	echo "If you pressed 'y' to replace/add my .xinitrc config, it should work out of the box."
+	echo "If you pressed 'y' to replace/add my .xinitrc config, should work out of the box."
 }
 
 main
