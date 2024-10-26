@@ -5,21 +5,10 @@ red="\e[31m"
 green="\e[32m"
 reset="\e[0m"
 
-# Function to run commands as root
-#asRoot() {
-#	if [ "$EUID" -ne 0 ]; then
-#		sudo "$@"
-#	else
-#		"$@"
-#	fi
-#}
-
 installYay() {
 	if ! command -v yay &> /dev/null; then
 		echo -e "${red}yay not installed!${reset} Installing now."
-		#asRoot pacman -S --needed git
-		#sudo pacman -S --noconfirm --needed git base-devel
-		git clone https://aur.archlinux.org/yay.git ~/ || { echo -e "${red}Failed to clone yay repo.${reset}"; exit 1; }
+		cd; git clone https://aur.archlinux.org/yay.git || { echo -e "${red}Failed to clone yay repo.${reset}"; exit 1; }
 		cd ~/yay || { echo -e "${red}Failed to cd into yay dir.${reset}"; exit 1; }
 		makepkg -si --noconfirm --needed
 		echo -e "${green}yay installed!${reset}"
@@ -30,16 +19,16 @@ installYay() {
 
 installPackages() {
 	
-	cd; yay -S --noconfirm ttf-jetbrains-mono-nerd xorg-server xorg-xinit xrandr xorg-xsetroot libx11 libxft libxinerama xclip feh flameshot rofi brightnessctl picom alacritty make cmake
+	cd; yay -S --noconfirm ttf-jetbrains-mono-nerd xorg-server xorg-xinit xorg-xrandr xorg-xsetroot libx11 libxft libxinerama xclip feh flameshot rofi brightnessctl picom alacritty make cmake
 }
 
 installDwm() {
-	cd ~/src/ato-dwm/dwm || { echo -e "${red}Failed to cd into dwm directory.${reset}"; exit 1; }
+	cd ~/git-repos/ato-dwm/dwm || { echo -e "${red}Failed to cd into dwm directory.${reset}"; exit 1; }
 	sudo make clean install
 }
 
 moveConfigFiles() {
-	cd ~/src/ato-dwm/.config || { echo -e "${red}Failed to cd into .config directory.${reset}"; exit 1; }
+	cd ~/git-repos/ato-dwm/.config || { echo -e "${red}Failed to cd into .config directory.${reset}"; exit 1; }
 	sudo mv rofi ~/.config
 }
 
@@ -48,7 +37,7 @@ replaceXinitrc() {
 		read -rp "Do you want to replace your current .xinitrc if you have one? (of course do 'y' if this is a fresh install.) (y/n): " replace
 		case $replace in
 			y|Y) 
-				sudo mv ~/src/ato-dwm/.xinitrc ~/
+				sudo mv ~/git-repos/ato-dwm/.xinitrc ~/
 				break
 				;;
 			n|N) 
@@ -67,7 +56,7 @@ replacePicomConfig() {
 		read -rp "Add picom.conf to /etc/xdg? Press 'y' if this is a fresh install. (y/n): " picominstall
 		case $picominstall in
 			y|Y)
-				sudo mv ~/src/ato-dwm/picom.conf /etc/xdg/
+				sudo mv ~/git-repos/ato-dwm/picom.conf /etc/xdg/
 				echo "picom.conf was moved into /etc/xdg/"
 				break
 				;;
@@ -87,7 +76,7 @@ reduce-screen-tear-on-xorg-massivly() {
                 read -rp "Move 20-intel.conf to /etc/X11/xorg.conf.d/ aka enable reduced screen tearing for xorg? (y/n): " reducescreentear
                 case $reducescreentear in
                         y|Y)
-                                sudo mv ~/src/ato-dwm/20-intel.conf /etc/X11/xorg.conf.d/
+                                sudo mv ~/git-repos/ato-dwm/20-intel.conf /etc/X11/xorg.conf.d/
                                 break
                                 ;;
                         n|N)
@@ -106,7 +95,7 @@ touchpad-for-laptops() {
                 read -rp "Move 30-touchpad.conf to /etc/X11/xorg.conf.d/ aka enable touchpad for laptops? (y/n): " laptoptouchpad
                 case $laptoptouchpad in
                         y|Y)
-                                sudo mv ~/src/ato-dwm/20-intel.conf /etc/X11/xorg.conf.d/
+                                sudo mv ~/git-repos/ato-dwm/20-intel.conf /etc/X11/xorg.conf.d/
                                 echo "Added 30-touchpad.conf to /etc/X11/xorg.conf.d/"
                                 break
                                 ;;
