@@ -18,7 +18,7 @@ installYay() {
 	if ! command -v yay &> /dev/null; then
 		echo -e "${red}yay not installed!${reset} Installing now."
 		#asRoot pacman -S --needed git
-		sudo pacman -S --noconfirm --needed git base-devel
+		#sudo pacman -S --noconfirm --needed git base-devel
 		git clone https://aur.archlinux.org/yay.git || { echo -e "${red}Failed to clone yay repo.${reset}"; exit 1; }
 		cd yay || { echo -e "${red}Failed to cd into yay dir.${reset}"; exit 1; }
 		makepkg -si --noconfirm --needed
@@ -29,7 +29,7 @@ installYay() {
 }
 
 installPackages() {
-	yay -S --noconfirm ttf-jetbrains-mono-nerd xorg-server xorg-xinit xorg-xsetroot libx11 libxft libxinerama xclip feh flameshot rofi brightnessctl picom alacritty xrandr make cmake
+	yay -S --noconfirm ttf-jetbrains-mono-nerd xorg-server xorg-xinit xrandr xorg-xsetroot libx11 libxft libxinerama xclip feh flameshot rofi brightnessctl picom alacritty make cmake
 }
 
 installDwm() {
