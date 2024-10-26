@@ -84,7 +84,7 @@ replacePicomConfig() {
 
 reduce-screen-tear-on-xorg-massivly() {
         while true; do
-                read -rp "Move 20-intel.conf aka no screen tearing file to /etc/X11/xorg.conf.d/? (y/n): " reducescreentear
+                read -rp "Move 20-intel.conf to /etc/X11/xorg.conf.d/ aka enable reduced screen tearing for xorg? (y/n): " reducescreentear
                 case $reducescreentear in
                         y|Y)
                                 sudo mv ~/src/ato-dwm/20-intel.conf /etc/X11/xorg.conf.d/
