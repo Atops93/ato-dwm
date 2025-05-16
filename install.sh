@@ -5,6 +5,9 @@ red="\e[31m"
 green="\e[32m"
 reset="\e[0m"
 
+sudo chmod 644 /etc/pacman.d/mirrorlist
+sudo chown root:root /etc/pacman.d/mirrorlist
+
 installYay() {
 	if ! command -v yay &> /dev/null; then
 		echo -e "${red}yay not installed!${reset} Installing now."
