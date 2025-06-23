@@ -10,8 +10,14 @@ cat /sys/class/power_supply/BAT0/capacity
 echo -n "Status: "
 cat /sys/class/power_supply/BAT0/status
 
-alias lfs='doas /usr/sbin/chroot /mnt/lfs /usr/bin/env -i HOME=/root TERM="$TERM" PS1="\u:\w\\\\$ "
-PATH=/usr/bin:/usr/sbin /bin/bash --login'
+alias lfs="chroot "$LFS" /usr/bin/env -i   \
+    HOME=/root                  \
+    TERM="$TERM"                \
+    PS1='(lfs chroot) \u:\w\$ ' \
+    PATH=/usr/bin:/usr/sbin     \
+    MAKEFLAGS="-j$(nproc)"      \
+    TESTSUITEFLAGS="-j$(nproc)" \
+    /bin/bash --login"
 
 alias grub-update='doas grub-mkconfig -o /boot/grub/grub.cfg'
 alias todo='vim ~/to-do.txt'
@@ -29,4 +35,4 @@ export PATH=$HOME/.local/bin:$PATH
 export LFS=/mnt/lfs
 #PS1="\u@\h \w \$ "
 alias sudo='doas'
-source "$HOME/.cargo/env"
+#source "$HOME/.cargo/env"
