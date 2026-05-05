@@ -1,4 +1,27 @@
 [window]
-opacity = 1.0
+opacity = 0.9
 padding.x = 10
 padding.y = 10
+#[window]
+#padding.x = 0
+#padding.y = 0
+
+
+[terminal.shell]
+program = "/bin/ksh"
+args = ["-l"]
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "Fixed"
+style = "Medium"
+
+
+#[font]
+#normal.family = "Bm437 IBM VGA 8x16"
+#bold.family = "Bm437 IBM VGA 8x16"
+#italic.family = "Bm437 IBM VGA 8x16"
+#bold_italic.family = "Bm437 IBM VGA 8x16"
+#size = 16
