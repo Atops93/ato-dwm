@@ -1,5 +1,11 @@
 #!/bin/bash
 
+###########################################
+# DONT INSTALL THIS RANDOMLY.
+###########################################
+
+
+
 # Colors for output
 red="\e[31m"
 green="\e[32m"
@@ -39,15 +45,15 @@ replaceXinitrc() {
 	while true; do
 		read -rp "Do you want to replace your current .xinitrc if you have one? (of course do 'y' if this is a fresh install.) (y/n): " replace
 		case $replace in
-			y|Y) 
+			y|Y)
 				sudo mv ~/git-repos/ato-dwm/.xinitrc ~/
 				break
 				;;
-			n|N) 
+			n|N)
 				echo "Skipping .xinitrc"
 				break
 				;;
-			*) 
+			*)
 				echo "Invalid input, enter 'y' or 'n'."
 				;;
 		esac

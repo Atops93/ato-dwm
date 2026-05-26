@@ -21,7 +21,6 @@
     "cursor",
     "terminal",
     "terminalfont",
-    "locale",
     "memory",
     "break",
     "colors"
